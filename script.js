@@ -9,15 +9,13 @@ const getComputerChoice = () => {
     }
 }
 
-const getHumanChoice = () => {
-    let choice = prompt("Pick Rock Paper Scissors")
-    return choice.toLowerCase()
-}
-
-
 const playGame = () => {
     let humanScore = 0
     let computerScore = 0
+    const div = document.querySelector('#result')
+    const rock = document.querySelector('#r')
+    const paper = document.querySelector('#p')
+    const scissors = document.querySelector('#s')
 
     const playRound = (humanChoice, computerChoice) => {
         // Computer chooses rock
@@ -56,18 +54,31 @@ const playGame = () => {
                 console.log('draw, computer chose scissors')
             }
         }
+
+        div.textContent = `Human: ${humanScore} | Computer: ${computerScore}`
+
+        if (humanScore === 5) {
+            console.log('human wins')
+            div.textContent = 'human wins'
+            humanScore = 0
+            computerScore = 0
+        } else if (computerScore === 5) {
+            console.log('computer wins')
+            div.textContent = 'computer wins'
+            humanScore = 0
+            computerScore = 0
+        }
     }
-    
-    for (let i = 0; i < 5; i++) {
-        let humanChoice = getHumanChoice()
-        let computerChoice = getComputerChoice()
-        playRound(humanChoice, computerChoice)
-    }
-    if (humanScore > computerScore) {
-        console.log('human wins')
-    } else if (humanScore < computerScore) {
-        console.log('computer wins')
-    } else {
-        console.log('draw')
-    }
+
+    rock.addEventListener("click", () => {
+        playRound('rock', getComputerChoice())
+    })
+
+    paper.addEventListener("click", () => {
+        playRound('paper', getComputerChoice())
+    })
+
+    scissors.addEventListener("click", () => {
+        playRound('scissors', getComputerChoice())
+    })
 }
